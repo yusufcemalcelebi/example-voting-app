@@ -5,6 +5,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  serviceAccountName: jenkins-agent
   volumes:
   - name: docker-socket
     emptyDir: {}
