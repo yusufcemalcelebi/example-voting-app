@@ -29,39 +29,52 @@ spec:
     }
   }
   stages {
-    stage('Build and Push Voting Service Image') {
-      steps {
-        container('jenkins-builder') {
-          sh '''#!/bin/bash -xe
-          
-          [ ! -d "example-voting-app" ] && git clone https://github.com/yusufcemalcelebi/example-voting-app && cd "example-voting-app"
-          bash ./ci/builder.sh "vote" "${BUILD_NUMBER}"
-          
-          '''
+    stage('Git clone') {
+        steps {
+            container('jenkins-builder') {
+            sh '''#!/bin/bash -xe
+            git clone https://github.com/yusufcemalcelebi/example-voting-app
+            '''
+            }
         }
-      }
     }
-    stage('Build and Push Worker Service Image') {
-      steps {
-        container('jenkins-builder') {
-          sh '''#!/bin/bash -xe
-          
-          [ ! -d "example-voting-app" ] && git clone https://github.com/yusufcemalcelebi/example-voting-app && cd "example-voting-app"
-          bash ./ci/builder.sh "worker" "${BUILD_NUMBER}"
-          
-          '''
+    stage('Build and Deploy apps') {
+      parallel {
+        stage('Voting') {
+            steps {
+                container('jenkins-builder') {
+                sh '''#!/bin/bash -xe
+            
+                cd "example-voting-app"
+                bash ./ci/builder.sh "vote" "${BUILD_NUMBER}"
+                
+                '''
+                }
+            }
         }
-      }
-    }
-    stage('Build and Push Result Service Image') {
-      steps {
-        container('jenkins-builder') {
-          sh '''#!/bin/bash -xe
-          
-          [ ! -d "example-voting-app" ] && git clone https://github.com/yusufcemalcelebi/example-voting-app && cd "example-voting-app"
-          bash ./ci/builder.sh "result" "${BUILD_NUMBER}"
-          
-          '''
+        stage('Worker') {
+            steps {
+                container('jenkins-builder') {
+                sh '''#!/bin/bash -xe
+            
+                cd "example-voting-app"
+                bash ./ci/builder.sh "worker" "${BUILD_NUMBER}"
+                
+                '''
+                }
+            }
+        }
+        stage('Result') {
+            steps {
+                container('jenkins-builder') {
+                sh '''#!/bin/bash -xe
+            
+                cd "example-voting-app"
+                bash ./ci/builder.sh "result" "${BUILD_NUMBER}"
+                
+                '''
+                }
+            }
         }
       }
     }
