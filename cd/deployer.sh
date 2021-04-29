@@ -15,7 +15,7 @@ REMOTE_REPO="${REMOTE_REGISTRY}/${APP_NAME}"
 echo "Working directory is $WORK_DIR"
 cd $WORK_DIR
 
-helm upgrade -i $APP_NAME voting-app --dry-run --set image.repository="${APP_NAME}" \
+helm upgrade -i $APP_NAME voting-app --set image.repository="${APP_NAME}" \
                                 --set image.registry="$REMOTE_REGISTRY" \
                                 --set image.tag="${BUILD_TAG}" \
                                 --set probes.liveness.enabled=${PROBE_ENABLED} \
