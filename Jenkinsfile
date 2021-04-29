@@ -48,7 +48,7 @@ spec:
             
                 cd "example-voting-app"
                 bash ./ci/builder.sh "vote" "${BUILD_NUMBER}"
-                
+                bash ./cd/deployer.sh "vote" "${BUILD_NUMBER}"
                 '''
                 }
             }
@@ -60,7 +60,7 @@ spec:
             
                 cd "example-voting-app"
                 bash ./ci/builder.sh "worker" "${BUILD_NUMBER}"
-                
+                bash ./cd/deployer.sh "worker" "${BUILD_NUMBER}" false false
                 '''
                 }
             }
@@ -72,7 +72,7 @@ spec:
             
                 cd "example-voting-app"
                 bash ./ci/builder.sh "result" "${BUILD_NUMBER}"
-                
+                bash ./cd/deployer.sh "result" "${BUILD_NUMBER}"
                 '''
                 }
             }
