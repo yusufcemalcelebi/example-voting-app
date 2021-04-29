@@ -77,6 +77,17 @@ spec:
                 }
             }
         }
+        stage('DB and Redis') {
+            steps {
+                container('jenkins-builder') {
+                sh '''#!/bin/bash -xe
+            
+                cd "example-voting-app"
+                kubectl apply -f ./cd/db-redis.yaml
+                '''
+                }
+            }
+        }
       }
     }
   }
