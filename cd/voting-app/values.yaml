@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  registry: 728908105939.dkr.ecr.us-east-1.amazonaws.com
+  registry: 130575395405.dkr.ecr.us-east-1.amazonaws.com
   repository: result
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
